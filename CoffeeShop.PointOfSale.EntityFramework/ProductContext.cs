@@ -7,6 +7,7 @@ internal class ProductContext : DbContext
 {
 
     internal DbSet<Product> Products { get; set; }
+    internal DbSet<Category> Categories { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {

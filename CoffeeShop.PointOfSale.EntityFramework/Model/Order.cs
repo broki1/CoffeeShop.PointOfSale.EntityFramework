@@ -1,0 +1,10 @@
+﻿namespace CoffeeShop.PointOfSale.EntityFramework.Model;
+
+internal class Order
+{
+
+    public int OrderId { get; set; }
+    public decimal TotalPrice { get; set; }
+    public DateTime CreatedDate { get; set; }
+
+}
