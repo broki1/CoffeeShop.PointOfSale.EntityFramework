@@ -1,21 +1,19 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-
-namespace CoffeeShop.PointOfSale.EntityFramework.Model;
+﻿namespace CoffeeShop.PointOfSale.EntityFramework.Model;
 
 // creates Index on Name column
-[Index(nameof(Name), IsUnique =true)]
+// [Index(nameof(Name), IsUnique =true)]
 internal class Product
 {
-    [Key]
+    // [Key]
     public int ProductId { get; set; }
-    [Required]
+    // [Required]
     public string Name { get; set; }
-    [Required]
+    // [Required]
     public decimal Price { get; set; }
     public int CategoryId { get; set; }
 
-    [ForeignKey(nameof(CategoryId))]
+    // [ForeignKey(nameof(CategoryId))]
     public Category Category { get; set; }
+
+    public ICollection<OrderProduct> OrderProducts { get; set; }
 }

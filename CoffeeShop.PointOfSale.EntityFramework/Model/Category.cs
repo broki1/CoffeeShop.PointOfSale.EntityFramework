@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System.ComponentModel.DataAnnotations;
 
 namespace CoffeeShop.PointOfSale.EntityFramework.Model;
 
@@ -7,9 +6,9 @@ namespace CoffeeShop.PointOfSale.EntityFramework.Model;
 
 internal class Category
 {
-    [Key]
+    //[Key]
     public int CategoryId { get; set; }
-    [Required]
+    //[Required]
     public string Name { get; set; }
     public List<Product> Products { get; set; }
 }
