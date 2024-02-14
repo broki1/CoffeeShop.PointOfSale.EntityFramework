@@ -6,6 +6,7 @@ internal class Enums
     {
         ManageCategories,
         ManageProducts,
+        ManageOrders,
         Quit
     }
 
@@ -26,6 +27,12 @@ internal class Enums
         UpdateProduct,
         ViewProduct,
         ViewAllProducts,
+        GoBack
+    }
+
+    internal enum OrderMenu
+    {
+        AddOrder,
         GoBack
     }
 }

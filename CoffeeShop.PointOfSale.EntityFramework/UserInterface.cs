@@ -22,6 +22,7 @@ internal class UserInterface
                 .Title("What would you like to do?")
                 .AddChoices(MainMenuOptions.ManageCategories,
                 MainMenuOptions.ManageProducts,
+                MainMenuOptions.ManageOrders,
                 MainMenuOptions.Quit));
 
             switch (option)
@@ -32,9 +33,39 @@ internal class UserInterface
                 case MainMenuOptions.ManageProducts:
                     ProductsMenu();
                     break;
+                case MainMenuOptions.ManageOrders:
+                    OrdersMenu();
+                    break;
                 case MainMenuOptions.Quit:
                     Console.WriteLine("Goodbye.");
                     isAppRunning = false;
+                    break;
+            }
+        }
+    }
+
+    private static void OrdersMenu()
+    {
+        var inOrdersMenu = true;
+
+        while (inOrdersMenu)
+        {
+            Console.Clear();
+            var option = AnsiConsole.Prompt(
+            new SelectionPrompt<OrderMenu>()
+            .Title("What would you like to do?")
+            .AddChoices(
+            OrderMenu.AddOrder,
+            OrderMenu.GoBack
+            ));
+
+            switch (option)
+            {
+                case OrderMenu.AddOrder:
+                    OrderService.InsertOrder();
+                    break;
+                case OrderMenu.GoBack:
+                    inOrdersMenu = false;
                     break;
             }
         }
