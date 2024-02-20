@@ -21,13 +21,13 @@ internal class ProductContext : DbContext
         modelBuilder.Entity<OrderProduct>().HasKey(op => new { op.ProductId, op.OrderId });
 
         modelBuilder.Entity<OrderProduct>()
-            .HasOne<Order>(o => o.Order)
-            .WithMany(op => op.OrderProducts)
+            .HasOne<Order>(op => op.Order)
+            .WithMany(o => o.OrderProducts)
             .HasForeignKey(op => op.OrderId);
 
         modelBuilder.Entity<OrderProduct>()
             .HasOne<Product>(op => op.Product)
-            .WithMany(o => o.OrderProducts)
+            .WithMany(p => p.OrderProducts)
             .HasForeignKey(op => op.ProductId);
 
         modelBuilder.Entity<Product>()
