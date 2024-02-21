@@ -1,4 +1,5 @@
-﻿using CoffeeShop.PointOfSale.EntityFramework.Model;
+﻿using CoffeeShop.PointOfSale.EntityFramework.DTO;
+using CoffeeShop.PointOfSale.EntityFramework.Model;
 using CoffeeShop.PointOfSale.EntityFramework.Services;
 using Spectre.Console;
 using System.Globalization;
@@ -56,6 +57,8 @@ internal class UserInterface
             .Title("What would you like to do?")
             .AddChoices(
             OrderMenu.AddOrder,
+            OrderMenu.ViewOrders,
+            OrderMenu.ViewOrder,
             OrderMenu.GoBack
             ));
 
@@ -63,6 +66,12 @@ internal class UserInterface
             {
                 case OrderMenu.AddOrder:
                     OrderService.InsertOrder();
+                    break;
+                case OrderMenu.ViewOrders:
+                    OrderService.GetOrders();
+                    break;
+                case OrderMenu.ViewOrder:
+                    OrderService.GetOrder();
                     break;
                 case OrderMenu.GoBack:
                     inOrdersMenu = false;
@@ -193,6 +202,26 @@ internal class UserInterface
         Console.ReadKey();
     }
 
+    internal static void ShowOrdersTable(List<Order> orders)
+    {
+        var table = new Table();
+        table.AddColumn("Id");
+        table.AddColumn("Date");
+        table.AddColumn("Count");
+        table.AddColumn("Total Price");
+
+        foreach (var order in orders)
+        {
+            table.AddRow(order.OrderId.ToString(), order.CreatedDate.ToString(), 
+                order.OrderProducts.Sum(x=> x.Quantity).ToString(), order.TotalPrice.ToString());
+        }
+
+        AnsiConsole.Write(table);
+
+        Console.WriteLine("\nPress any key to continue");
+        Console.ReadKey();
+    }
+
     internal static void ShowProduct(Product product)
     {
         var panel = new Panel($@"ID: {product.ProductId}
@@ -219,5 +248,38 @@ Product Count: {category.Products.Count}");
         AnsiConsole.Write(panel);
 
         ShowProductTable(category.Products);
+    }
+
+    internal static void ShowOrder(Order order)
+    {
+        var panel = new Panel($@"ID: {order.OrderId}
+Date: {order.CreatedDate}
+Product Count: {order.OrderProducts.Sum(x => x.Quantity)}");
+        panel.Header = new PanelHeader($"Order #{order.OrderId}");
+        panel.Padding = new Padding(2, 2, 2, 2);
+
+        AnsiConsole.Write(panel);
+    }
+
+    internal static void ShowProductForOrderTable(List<ProductForOrderViewDTO> products)
+    {
+        var table = new Table();
+        table.AddColumn("Id");
+        table.AddColumn("Name");
+        table.AddColumn("Category");
+        table.AddColumn("Price");
+        table.AddColumn("Quantity");
+        table.AddColumn("Total Price");
+
+        foreach (ProductForOrderViewDTO product in products)
+        {
+            table.AddRow(product.Id.ToString(), product.Name, product.CategoryName, 
+                product.Price.ToString(), product.Quantity.ToString(), product.TotalPrice.ToString());
+        }
+
+        AnsiConsole.Write(table);
+
+        Console.WriteLine("\nPress any key to continue");
+        Console.ReadKey();
     }
 }

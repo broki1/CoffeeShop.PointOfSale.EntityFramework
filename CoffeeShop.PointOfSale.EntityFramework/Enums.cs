@@ -33,6 +33,8 @@ internal class Enums
     internal enum OrderMenu
     {
         AddOrder,
+        ViewOrders,
+        ViewOrder,
         GoBack
     }
 }
